@@ -1,6 +1,6 @@
 using Gtk;
 class RowWidget : Box {
-    ToggleButton direction_btn = new ToggleButton(){image = new Image.from_icon_name("dialog-warning-symbolic", IconSize.BUTTON)};
+    ToggleButton direction_btn = new ToggleButton()/*{image = new Image.from_icon_name("pan-end-symbolic", IconSize.BUTTON)}*/;
     ToggleButton select_btn = new ToggleButton();
 
     
@@ -21,6 +21,10 @@ class RowWidget : Box {
         
         this.add(select_btn);
         this.add(direction_btn);
+        direction_btn.always_show_image = true;
+        direction_btn.label = "";
+        direction_btn.set_image(new Image.from_icon_name("pan-end", IconSize.BUTTON));
+
         
         get_style_context().add_class(STYLE_CLASS_LINKED);
 
