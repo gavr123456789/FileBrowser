@@ -3,26 +3,20 @@ using Gee;
 public class DirectoryNavigator{
 
     public DirectoryNavigator() {
-        path.add(Environment.get_home_dir());
         get_files_names();
     }
 
-    ArrayList<string> path = new ArrayList<string>();
+    PathHelper path = new PathHelper();
+    //  ArrayList<string> path = new ArrayList<string>();
     HashSet<string> dirs_search = new HashSet<string>(); 
 
     ArrayList<string> dirs = new ArrayList<string>();
     ArrayList<string> files = new ArrayList<string>();
 
-    public int size { get{ return path.size; } }
-
-    // Adds/removes dir name from global path
-    void append(string s) { path.add(Path.DIR_SEPARATOR_S + s); }
-    void remove()         { path.remove_at(path.size - 1); }
-
 
     public bool goto(string dir){
         if(dir in dirs_search){
-            append(dir);
+            path.append(dir);
             message(@"goto $dir");
             get_files_names();
             return true;
@@ -32,11 +26,11 @@ public class DirectoryNavigator{
         }
     }
     public void go_back(){
-        remove();
+        path.remove();
         get_files_names();
     }
 
-    string directory { owned get { return get_full_path(); }}
+    string directory { owned get { return path.get_full(); }}
 
     //Updates dirs and files with dirs and files in current dir
     public string[] get_files_names() {
@@ -77,14 +71,6 @@ public class DirectoryNavigator{
         return this.get_names();
     }
 
-    public string get_full_path(){
-        var builder = new StringBuilder();
-        foreach(var a in path){
-            builder.append(a);
-        }
-        return builder.str;
-    }
-
     public void print(){
         prin("\033[1;34m");
         int i;
@@ -116,6 +102,29 @@ public class DirectoryNavigator{
         var s = builder.str;
         return s;
     }
+    
+ 
 }
+
+class PathHelper {
+    public PathHelper(){
+        path.add(Environment.get_home_dir());
+    }
+    ArrayList<string> path = new ArrayList<string>();
+        // Adds/removes dir name from global path
+    public void append(string s) { path.add(Path.DIR_SEPARATOR_S + s); }
+    public void remove()         { path.remove_at(path.size - 1); }
+    public int size { get{ return path.size; } }
+
+    public string get_full(){
+        var builder = new StringBuilder();
+        foreach(var a in path){
+            builder.append(a);
+        }
+        return builder.str;
+    }
+}
+
+
 
 [Print] public void prin(string s){stdout.printf(s + "\n");}

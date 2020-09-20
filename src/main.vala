@@ -8,7 +8,7 @@ int main (string[] args) {
 
 	app.activate.connect (() => {
 		var win = app.active_window;
-		win = new Infinitepaginator.Window (app);
+		win = new Katana.Window (app);
 		win.present ();
 	});
 

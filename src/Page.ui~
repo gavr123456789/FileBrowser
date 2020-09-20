@@ -2,7 +2,7 @@
 <!-- Generated with glade 3.36.0 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
-  <template class="KatanaPage" parent="GtkScrolledWindow">
+  <template class="InfinitepaginatorPage" parent="GtkScrolledWindow">
     <property name="visible">True</property>
     <property name="can_focus">True</property>
     <property name="shadow_type">in</property>
