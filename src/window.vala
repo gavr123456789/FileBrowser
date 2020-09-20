@@ -27,6 +27,7 @@ public class Window : Hdy.ApplicationWindow {
 		btn.set_label("remove page");
 		remove_page();
 	}
+
 	[GtkCallback]
 	private void dbg_button_clicked2 (Gtk.Button btn) {
 		
@@ -35,22 +36,7 @@ public class Window : Hdy.ApplicationWindow {
 	void create_page(string[] elem_names){
 		var page = new Page (elem_names);
 
-		page.toggled.connect((label, is_active) =>{
-			if(is_active){
-				prin(current_page+1, " ", carousel.n_pages);
-				if (current_page+1 < carousel.n_pages){
-					for (var i = 0; i < carousel.n_pages - current_page+1; i++){
-						remove_page();
-					}
-				}
-				dir_iterator.goto(label);
-				create_page(dir_iterator.get_names());
-			} else {
-
-				dir_iterator.go_back();
-				remove_page();
-			}
-		});
+		page.toggled.connect(page_toggled);
 
 		page.show ();
 		carousel.add(page);
@@ -60,6 +46,26 @@ public class Window : Hdy.ApplicationWindow {
 	void remove_page(){
 		carousel.remove (carousel.get_children().last().data);
 		dir_iterator.go_back();
+	}
+
+	
+	void page_toggled(string label, bool is_active){
+		if(is_active){
+			prin(current_page+1, " ", carousel.n_pages);
+			uint diff_max_and_now = carousel.n_pages - (current_page + 1);
+			if (diff_max_and_now != 0){
+				for (var i = 0; i < diff_max_and_now; i++){
+					prin("removing page ", i, " of ", diff_max_and_now);
+					remove_page();
+				}
+			}
+			dir_iterator.goto(label);
+			create_page(dir_iterator.get_names());
+		} else {
+
+			dir_iterator.go_back();
+			remove_page();
+		}
 	}
 }
 

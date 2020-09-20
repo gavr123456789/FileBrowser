@@ -21,8 +21,8 @@ public class DirectoryNavigator{
             get_files_names();
             return true;
         } else {
-            message(@"no such directory: $dir");
-            return false;
+            error(@"no such directory: $dir");
+            //  return false;
         }
     }
     public void go_back(){
@@ -102,8 +102,6 @@ public class DirectoryNavigator{
         var s = builder.str;
         return s;
     }
-    
- 
 }
 
 class PathHelper {
@@ -111,7 +109,6 @@ class PathHelper {
         path.add(Environment.get_home_dir());
     }
     ArrayList<string> path = new ArrayList<string>();
-        // Adds/removes dir name from global path
     public void append(string s) { path.add(Path.DIR_SEPARATOR_S + s); }
     public void remove()         { path.remove_at(path.size - 1); }
     public int size { get{ return path.size; } }

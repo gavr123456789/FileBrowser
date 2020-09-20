@@ -5,7 +5,7 @@ namespace Katana {
 		[GtkChild] ListBox page_content;
 
 		public signal void toggled(string str, bool is_active);
-		
+
 		public Page(string[] names){
 			foreach (var name in names){
 				add_new_element(name);
@@ -14,11 +14,15 @@ namespace Katana {
 
 		public void add_new_element(owned string name = "noname"){
 			var row = new RowWidget() { label = name };
-			row.toggleBtn.toggled.connect( src => {
-				toggled(src.label ?? "unknown", src.active);
-			});
+			row.toggleBtn.toggled.connect(any_toggled);
 			page_content.add(row);
 			
+		}
+
+		void any_toggled(ToggleButton src){
+			
+			toggled(src.label ?? "unknown", src.active);
+
 		}
 
 	}
