@@ -7,12 +7,10 @@ public class DirectoryNavigator{
     }
 
     PathHelper path = new PathHelper();
-    //  ArrayList<string> path = new ArrayList<string>();
-    HashSet<string> dirs_search = new HashSet<string>(); 
 
+    HashSet<string> dirs_search = new HashSet<string>(); 
     ArrayList<string> dirs = new ArrayList<string>();
     ArrayList<string> files = new ArrayList<string>();
-
 
     public bool goto(string dir){
         if(dir in dirs_search){
@@ -21,6 +19,7 @@ public class DirectoryNavigator{
             get_files_names();
             return true;
         } else {
+            prin(path);
             error(@"no such directory: $dir");
             //  return false;
         }
@@ -113,12 +112,15 @@ class PathHelper {
     public void remove()         { path.remove_at(path.size - 1); }
     public int size { get{ return path.size; } }
 
-    public string get_full(){
+    public inline string get_full(){
         var builder = new StringBuilder();
         foreach(var a in path){
             builder.append(a);
         }
         return builder.str;
+    }
+    public string to_string(){
+        return get_full();
     }
 }
 

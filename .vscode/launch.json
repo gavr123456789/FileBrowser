@@ -8,7 +8,7 @@
             "name": "Run Console",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/src/Console_app/ModelTest",
+            "program": "{workspaceFolder}/build/src/Console_app/ModelTest",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -19,7 +19,7 @@
                 {
                     "description": "Включить автоматическое форматирование для gdb",
                     "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
+                    "ignoreFailures": true,
                 }
             ]
         },

@@ -63,8 +63,8 @@ public class Window : Hdy.ApplicationWindow {
 			create_page(dir_iterator.get_names());
 		} else {
 
-			dir_iterator.go_back();
-			remove_page();
+			//  dir_iterator.go_back();
+			//  remove_page();
 		}
 	}
 }
