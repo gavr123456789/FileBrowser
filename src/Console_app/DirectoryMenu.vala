@@ -1,9 +1,10 @@
-class DirectoryMenu{
+public class DirectoryMenu {
     DirectoryNavigator dir_navigator = new DirectoryNavigator();
     public void run(){
         string answer = "";
         dir_navigator.print();
         prin(0, ". exit");
+        prin(-1, ". back");
         
         while (answer != "0"){
             answer = (!)stdin.read_line();
@@ -14,6 +15,7 @@ class DirectoryMenu{
             }
             dir_navigator.print();
             prin(0, ". exit");
+            prin(-1, ". back");
         }
     }
 }

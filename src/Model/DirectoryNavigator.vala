@@ -1,26 +1,6 @@
 using Gee;
-void main(){
-    //Tests
-    //  var dir_iter = new DirectoryNavigator();
-    //  prin(dir_iter);
-    //  dir_iter.goto("Projects");
-    //  prin(dir_iter.get_full_path());
-    //  prin("\n", dir_iter);
-    //  dir_iter.goto("qq");
-    //  prin(dir_iter.get_full_path());
-    //  prin("\n", dir_iter);
-    //  dir_iter.go_back();
-    //  prin(dir_iter.get_full_path());
-    //  prin("\n", dir_iter);
-    //File menu
-    var menu = new DirectoryMenu();
-    menu.run();
 
-}
-
-
-
-class DirectoryNavigator{
+public class DirectoryNavigator{
 
     public DirectoryNavigator() {
         path.add(Environment.get_home_dir());
@@ -28,12 +8,14 @@ class DirectoryNavigator{
     }
 
     ArrayList<string> path = new ArrayList<string>();
-    HashSet<string> dirs_search = new HashSet<string>(); // if true then its dir //TODO replace with treeset
+    HashSet<string> dirs_search = new HashSet<string>(); 
 
     ArrayList<string> dirs = new ArrayList<string>();
     ArrayList<string> files = new ArrayList<string>();
 
     public int size { get{ return path.size; } }
+
+    // Adds/removes dir name from global path
     void append(string s) { path.add(Path.DIR_SEPARATOR_S + s); }
     void remove()         { path.remove_at(path.size - 1); }
 
@@ -45,7 +27,7 @@ class DirectoryNavigator{
             get_files_names();
             return true;
         } else {
-            message(@"no such directory");
+            message(@"no such directory: $dir");
             return false;
         }
     }
@@ -54,10 +36,10 @@ class DirectoryNavigator{
         get_files_names();
     }
 
-    string directory{ owned get { return get_full_path(); }}
+    string directory { owned get { return get_full_path(); }}
 
-    
-    void get_files_names() {
+    //Updates dirs and files with dirs and files in current dir
+    public string[] get_files_names() {
         try {
             Dir dir = Dir.open (directory, 0);
             string? name = null;
@@ -71,8 +53,7 @@ class DirectoryNavigator{
     
                 if (FileUtils.test (path, FileTest.IS_REGULAR)) {
                     type += "| REGULAR ";
-                    //  dirs_search[Filename.display_basename(path)] = false;
-                    files.add(Filename.display_basename(path));
+                    files.add(Filename.display_basename(path) + " REGULAR ");
                 }
     
                 if (FileUtils.test (path, FileTest.IS_SYMLINK)) {
@@ -92,6 +73,8 @@ class DirectoryNavigator{
         } catch (FileError err) {
             stderr.printf (err.message);
         }
+
+        return this.get_names();
     }
 
     public string get_full_path(){
@@ -99,8 +82,7 @@ class DirectoryNavigator{
         foreach(var a in path){
             builder.append(a);
         }
-        var s = builder.str.dup();
-        return s;
+        return builder.str;
     }
 
     public void print(){
@@ -115,6 +97,18 @@ class DirectoryNavigator{
         }
     }
 
+    public string[] get_names(){
+        string[] names = {};
+        int i;
+        for (i = 0; i < dirs.size; i++){
+            names += dirs[i];
+        }
+        for (int j = 0; j < files.size; j++){
+            names += files[j];
+        }
+        return names;
+    }
+
     public string to_string(){
         var builder = new StringBuilder();
         foreach (var file in dirs_search)
@@ -124,4 +118,4 @@ class DirectoryNavigator{
     }
 }
 
-[Print] void prin(string s){stdout.printf(s + "\n");}
+[Print] public void prin(string s){stdout.printf(s + "\n");}
