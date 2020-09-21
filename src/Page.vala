@@ -2,7 +2,9 @@ using Gtk;
 namespace Katana {
 	[GtkTemplate (ui = "/org/gnome/Katana/Page.ui")]
 	public class Page : ScrolledWindow {
-		[GtkChild] ListBox page_content;
+		[GtkChild] Box page_content;
+
+		
 		RowWidget? last_toggled_widget;
 
 		public signal void toggled(string str, bool is_active);

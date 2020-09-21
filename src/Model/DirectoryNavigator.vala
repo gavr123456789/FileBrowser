@@ -15,7 +15,7 @@ public class DirectoryNavigator{
     public bool goto(string dir){
         if(dir in dirs_search){
             path.append(dir);
-            message(@"goto $dir");
+            //  message(@"goto $dir");
             get_files_names();
             return true;
         } else {
