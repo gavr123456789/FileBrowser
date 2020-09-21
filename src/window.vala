@@ -2,9 +2,9 @@ using Gee;
 namespace Katana{
 [GtkTemplate (ui = "/org/gnome/Katana/window.ui")]
 public class Window : Hdy.ApplicationWindow {
-
-	[GtkChild]
-	Hdy.Carousel carousel;
+	[GtkChild] Hdy.Carousel carousel;
+	[GtkChild] Gtk.ToggleButton search_button;
+	[GtkChild] Gtk.SearchBar searchbar;
 	uint current_page; 
 	DirectoryNavigator dir_iterator = new DirectoryNavigator();
 	
@@ -29,9 +29,13 @@ public class Window : Hdy.ApplicationWindow {
 	}
 
 	[GtkCallback]
-	private void dbg_button_clicked2 (Gtk.Button btn) {
-		
-	}	
+	void on_search_button_toggled () {
+		if (search_button.active) {
+			searchbar.search_mode_enabled = true;
+		} else {
+			searchbar.search_mode_enabled = false;
+		}
+	}
 
 	void create_page(string[] elem_names){
 		var page = new Page (elem_names);

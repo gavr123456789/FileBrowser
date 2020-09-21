@@ -1,22 +1,32 @@
 using Gtk;
+using Gee;
 namespace Katana {
 	[GtkTemplate (ui = "/org/gnome/Katana/Page.ui")]
 	public class Page : ScrolledWindow {
 		[GtkChild] ListBox page_content;
 		RowWidget? last_toggled_widget;
-		string[] file_names = {};
+		//  string[] file_names = {};
+		//  ArrayQueue<string> file_names_list = new ArrayQueue<string>();
 
 		public signal void toggled(string str, bool is_active);
 
 		public Page(owned string[] names){
-			file_names = names;
+			page_content.set_header_func(set_header_func);
+			//  file_names = names;
+
+			//  foreach (var file_name in names)
+			//  	file_names_list.add(file_name);
+			
 			if (names.length != 0)
 				fill_page.begin(names);
 		}
 
+		void set_header_func (Gtk.ListBoxRow row, Gtk.ListBoxRow? row_before) {
+			row.set_header (new Gtk.Separator (Gtk.Orientation.HORIZONTAL));
+		}
+
 		public async void fill_page(owned string[] names){
 			var timer = new Timer();
-			var part =  names.length>=4? names.length / 4: 1;
 			var counter = 1;
 			foreach (var name in names){
 				add_new_element(name);
@@ -24,9 +34,7 @@ namespace Katana {
 					show_all();
 					Idle.add (fill_page.callback);
 					yield;
-					//  prin("YIELD");
 				}
-
 				++counter;
 			}
 			prin(Log.METHOD, " ",timer.elapsed());
@@ -52,4 +60,28 @@ namespace Katana {
 		}
 
 	}
+
+
+			//Future lazy load?
+		//  bool need_more() {
+		//  	int natural_height;
+		//  	page_content.get_preferred_height (null, out natural_height);
+		//  	if (this.vadjustment.page_size > natural_height) {
+		//  		return true;
+		//  	}
+		//  	return false;
+		//  }
+		//  void complete_packages_list (owned string[] names) {
+		//  	if (file_names_list.size != 0) {
+		//  		uint i = 0;
+		//  		// display the next 20 packages
+		//  		while (i < 20) {
+
+		//  			var file = file_names_list.poll();
+		//  			add_new_element (file);
+		//  			i++;
+		//  		}
+		//  	}
+		//  	show_all();
+		//  }
 }
