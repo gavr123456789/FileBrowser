@@ -5,8 +5,7 @@ namespace Katana {
 	public class Page : ScrolledWindow {
 		[GtkChild] ListBox page_content;
 		RowWidget? last_toggled_widget;
-		//  string[] file_names = {};
-		//  ArrayQueue<string> file_names_list = new ArrayQueue<string>();
+		ArrayQueue<string> file_names_list = new ArrayQueue<string>();
 
 		public signal void toggled(string str, bool is_active);
 
@@ -14,34 +13,41 @@ namespace Katana {
 			page_content.set_header_func(set_header_func);
 			//  file_names = names;
 
-			//  foreach (var file_name in names)
-			//  	file_names_list.add(file_name);
+			foreach (var file_name in names)
+				file_names_list.add((owned)file_name);
 			
-			if (names.length != 0)
-				fill_page.begin(names);
+			// Lazy loading
+			this.vadjustment.value_changed.connect (() => {
+				double max_value = (this.vadjustment.upper - this.vadjustment.page_size) * 0.8;
+				if (this.vadjustment.value >= max_value) {
+					fill_page.begin();
+				}
+			});
+			this.vadjustment.changed.connect (() => {
+				while (need_more()) {
+					fill_page.begin();
+				}
+			});
 		}
 
 		void set_header_func (Gtk.ListBoxRow row, Gtk.ListBoxRow? row_before) {
 			row.set_header (new Gtk.Separator (Gtk.Orientation.HORIZONTAL));
 		}
 
-		public async void fill_page(owned string[] names){
+		public async void fill_page(){
 			var timer = new Timer();
-			var counter = 1;
-			foreach (var name in names){
-				add_new_element(name);
-				if (counter == 30){
-					show_all();
-					Idle.add (fill_page.callback);
-					yield;
-				}
-				++counter;
+			int max = file_names_list.size >= 30? 30: file_names_list.size;
+			
+			for (var i = 0; i < max; ++i){
+				add_new_element(file_names_list.poll());
 			}
 			prin(Log.METHOD, " ",timer.elapsed());
+			prin("Items left: ", file_names_list.size);
+
 			show_all();
 		}
 
-		public void add_new_element(owned string name = "noname"){
+		public void add_new_element(owned string name){
 			var row = new RowWidget() { label = name };
 			row.toggled.connect(untoggle_last);
 			page_content.add(row);
@@ -59,29 +65,17 @@ namespace Katana {
 			toggled(label, active);
 		}
 
+		//For lazy load
+		bool need_more() {
+			if(file_names_list.size != 0){
+				int natural_height;
+				page_content.get_preferred_height (null, out natural_height);
+				//  prin(this.vadjustment.page_size, " ", natural_height);
+				if (this.vadjustment.page_size > natural_height) {
+					return true;
+				}
+			}
+			return false;
+		}
 	}
-
-
-			//Future lazy load?
-		//  bool need_more() {
-		//  	int natural_height;
-		//  	page_content.get_preferred_height (null, out natural_height);
-		//  	if (this.vadjustment.page_size > natural_height) {
-		//  		return true;
-		//  	}
-		//  	return false;
-		//  }
-		//  void complete_packages_list (owned string[] names) {
-		//  	if (file_names_list.size != 0) {
-		//  		uint i = 0;
-		//  		// display the next 20 packages
-		//  		while (i < 20) {
-
-		//  			var file = file_names_list.poll();
-		//  			add_new_element (file);
-		//  			i++;
-		//  		}
-		//  	}
-		//  	show_all();
-		//  }
 }
