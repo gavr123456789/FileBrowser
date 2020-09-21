@@ -1,12 +1,12 @@
 using Gtk;
-class RowWidget : Box {
-    public ToggleButton direction_btn = new ToggleButton(){
+class RowWidget : ListBoxRow {
+    private ToggleButton direction_btn = new ToggleButton(){
         always_show_image = true,
         label = "",
         image = new Image.from_icon_name("pan-end-symbolic", IconSize.BUTTON)
     };
-    public ToggleButton select_btn = new ToggleButton();
-
+    private ToggleButton select_btn = new ToggleButton();
+    private Box main_box = new Box(Orientation.HORIZONTAL, 0);
     
     public signal void toggled(string file_name, bool is_active);
   
@@ -19,21 +19,18 @@ class RowWidget : Box {
         set { select_btn.label = value; } 
     }
 
-    
+
     construct {
-        orientation = Orientation.HORIZONTAL;
+        this.add(main_box);
+        main_box.add(select_btn);
+        main_box.add(direction_btn);
         
-        this.add(select_btn);
-        this.add(direction_btn);
+        main_box.get_style_context().add_class(STYLE_CLASS_LINKED);
+        direction_btn.toggled.connect(toggled_handler);
+    }
 
-        
-        get_style_context().add_class(STYLE_CLASS_LINKED);
-
-        direction_btn.toggled.connect((src)=> {
-            toggled((!)select_btn.label, direction_btn.active);
-        });
-
-        show_all();
+    inline void toggled_handler (ToggleButton src){
+        toggled((!)select_btn.label, direction_btn.active);
     }
     
 }

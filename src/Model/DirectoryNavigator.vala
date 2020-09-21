@@ -33,6 +33,7 @@ public class DirectoryNavigator{
 
     //Updates dirs and files with dirs and files in current dir
     public string[] get_files_names() {
+        //  var timer = new Timer();
         try {
             Dir dir = Dir.open (directory, 0);
             string? name = null;
@@ -42,30 +43,31 @@ public class DirectoryNavigator{
     
             while ((name = dir.read_name ()) != null) {
                 string path = Path.build_filename (directory, name);
-                string type = "";
+                //  string type = "";
     
                 if (FileUtils.test (path, FileTest.IS_REGULAR)) {
-                    type += "| REGULAR ";
+                    //  type += "| REGULAR ";
                     files.add(Filename.display_basename(path) + " REGULAR ");
                 }
     
                 if (FileUtils.test (path, FileTest.IS_SYMLINK)) {
-                    type += "| SYMLINK ";
+                    //  type += "| SYMLINK ";
                 }
     
                 if (FileUtils.test (path, FileTest.IS_DIR)) {
-                    type += "| DIR ";
+                    //  type += "| DIR ";
                     dirs.add(Filename.display_basename(path));
                     dirs_search.add(Filename.display_basename(path));
                 }
     
                 if (FileUtils.test (path, FileTest.IS_EXECUTABLE)) {
-                    type += "| EXECUTABLE ";
+                    //  type += "| EXECUTABLE ";
                 }
             }
         } catch (FileError err) {
             stderr.printf (err.message);
         }
+        //  prin(Log.METHOD, " ",timer.elapsed());
 
         return this.get_names();
     }

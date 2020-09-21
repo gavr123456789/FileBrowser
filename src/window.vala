@@ -38,7 +38,7 @@ public class Window : Hdy.ApplicationWindow {
 
 		page.toggled.connect(page_toggled);
 
-		page.show ();
+		//  page.show ();
 		carousel.add(page);
 		carousel.scroll_to(page);
 	}
