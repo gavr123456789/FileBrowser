@@ -14,7 +14,7 @@ public class Window : Hdy.ApplicationWindow {
 	}
 
 	construct {
-		create_page ( dir_iterator.get_files_names() );
+		create_page ( dir_iterator.get_names() );
 	}
 
 	[GtkCallback]
@@ -55,22 +55,16 @@ public class Window : Hdy.ApplicationWindow {
 	
 	void page_toggled(string label, bool is_active){
 		if(is_active){
-			//  prin(current_page+1, " ", carousel.n_pages);
 			uint diff_max_and_now = carousel.n_pages - (current_page + 1);
 			if (diff_max_and_now != 0){
 				for (var i = 0; i < diff_max_and_now; i++){
-					//  prin("removing page ", i, " of ", diff_max_and_now);
 					remove_page();
 				}
 			}
 			dir_iterator.goto(label);
 			create_page(dir_iterator.get_names());
-		} else {
-
-			//  dir_iterator.go_back();
-			//  remove_page();
-		}
+		} 
 	}
 }
 
-}
+}// no usless extra indent

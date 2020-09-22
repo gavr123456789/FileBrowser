@@ -10,7 +10,7 @@ namespace Katana {
 		public signal void toggled(string str, bool is_active);
 
 		public Page(owned string[] names){
-			page_content.set_header_func(set_header_func);
+			page_content.set_header_func(set_header_func);// add separators
 			//  file_names = names;
 
 			foreach (var file_name in names)

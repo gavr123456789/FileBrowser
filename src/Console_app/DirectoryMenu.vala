@@ -8,14 +8,28 @@ public class DirectoryMenu {
         
         while (answer != "0"){
             answer = (!)stdin.read_line();
-            if (answer == "-1"){
-                dir_navigator.go_back();
-            } else {
-                dir_navigator.goto(answer);
+            switch (answer) {
+                case "-1": dir_navigator.go_back(); break;
+                case "1":{
+                    prin("enter dir name");
+                    string dir_name_answer = (!)stdin.read_line();
+                    dir_navigator.folder_helper.create_folder(dir_navigator.path, dir_name_answer);
+                    dir_navigator.get_files_names();
+                } break;
+                
+                case "0": break;
+
+                default: dir_navigator.goto(answer); break;
             }
+         
             dir_navigator.print();
+            prin(1, ". create dir");
+            prin(2, ". create file");
             prin(0, ". exit");
             prin(-1, ". back");
         }
     }
+
+
+ 
 }
