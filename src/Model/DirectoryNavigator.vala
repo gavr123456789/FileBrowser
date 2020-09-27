@@ -9,6 +9,9 @@ public class DirectoryNavigator{
     public PathHelper path_helper = new PathHelper();
     public FolderHelper folder_helper = new FolderHelper();
     public FileHelper file_helper = new FileHelper();
+    
+    
+
     public string path { owned get { return path_helper.get_full(); }}
 
     HashSet<string> dirs_search = new HashSet<string>(); 

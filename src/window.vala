@@ -5,6 +5,7 @@ public class Window : Hdy.ApplicationWindow {
 	[GtkChild] Hdy.Carousel carousel;
 	[GtkChild] Gtk.ToggleButton search_button;
 	[GtkChild] Gtk.SearchBar searchbar;
+	[GtkChild] Gtk.Entry folder_name_entry;
 	uint current_page; 
 	DirectoryNavigator dir_iterator = new DirectoryNavigator();
 	
@@ -23,9 +24,9 @@ public class Window : Hdy.ApplicationWindow {
 	}
 
 	[GtkCallback]
-	private void dbg_button_clicked1 (Gtk.Button btn) {
-		btn.set_label("remove page");
-		remove_page();
+	private void create_folder_clicked (Gtk.Button btn) {
+		
+		dir_iterator.folder_helper.create_folder(dir_iterator.path, folder_name_entry.text);
 	}
 
 	[GtkCallback]
