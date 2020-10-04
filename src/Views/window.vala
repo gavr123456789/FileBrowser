@@ -39,7 +39,7 @@ public class Window : Hdy.ApplicationWindow {
 	}
 
 	void create_page(string[] elem_names){
-		var page = new Page (elem_names);
+		var page = new Page (elem_names, dir_iterator.path);
 
 		page.toggled.connect(page_toggled);
 
@@ -57,11 +57,10 @@ public class Window : Hdy.ApplicationWindow {
 	void page_toggled(string label, bool is_active){
 		if(is_active){
 			uint diff_max_and_now = carousel.n_pages - (current_page + 1);
-			if (diff_max_and_now != 0){
-				for (var i = 0; i < diff_max_and_now; i++){
+			if (diff_max_and_now != 0)
+				for (var i = 0; i < diff_max_and_now; i++)
 					remove_page();
-				}
-			}
+			
 			dir_iterator.goto(label);
 			create_page(dir_iterator.get_names());
 		} 

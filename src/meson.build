@@ -1,8 +1,8 @@
 katana_sources = [
   'main.vala',
-  'window.vala',
-  'Page.vala',
-  'RowWidget.vala'
+  'Views/window.vala',
+  'Views/Page.vala',
+  'Views/RowWidget.vala'
 ]
 
 valadeps = [dependency('glib-2.0'), dependency('gobject-2.0')]
