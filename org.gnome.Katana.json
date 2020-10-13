@@ -44,7 +44,8 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/libhandy.git"
+                    "tag" : "carousel-fix",
+                    "url" : "https://gitlab.gnome.org/exalm/libhandy.git"
                 }
             ]
         },
@@ -54,8 +55,8 @@
             "buildsystem": "meson",
             "sources": [
                 {
-                    "type": "git",
-                    "url": "file:///home/exalm/Projects/Katana"
+                    "type": "dir",
+                    "path": "."
                 }
             ]
         }

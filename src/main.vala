@@ -12,5 +12,7 @@ int main (string[] args) {
 		win.present ();
 	});
 
+	Log.set_always_fatal(LogLevelFlags.LEVEL_CRITICAL);
+
 	return app.run (args);
 }

@@ -9,17 +9,17 @@ public class DirectoryMenu {
         while (answer != "0"){
             answer = (!)stdin.read_line();
             switch (answer) {
-                case "-1": dir_navigator.go_back(); break;
+                //  case "-1": dir_navigator.go_back(); break;
                 case "1":{
                     prin("enter dir name");
                     string dir_name_answer = (!)stdin.read_line();
                     dir_navigator.folder_helper.create_folder(dir_navigator.path, dir_name_answer);
-                    dir_navigator.get_files_names();
+                    dir_navigator.update();
                 } break;
                 
                 case "0": break;
 
-                default: dir_navigator.goto(answer); break;
+                //  default: dir_navigator.goto(answer); break;
             }
          
             dir_navigator.print();

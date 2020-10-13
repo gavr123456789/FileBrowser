@@ -6,8 +6,9 @@ public class Window : Hdy.ApplicationWindow {
 	[GtkChild] Gtk.ToggleButton search_button;
 	[GtkChild] Gtk.SearchBar searchbar;
 	[GtkChild] Gtk.Entry folder_name_entry;
-	uint current_page; 
+	//  uint current_page; 
 	DirectoryNavigator dir_iterator = new DirectoryNavigator();
+	PathHelper path_helper = new PathHelper();
 	
 
 	public Window (Gtk.Application app) {
@@ -15,12 +16,13 @@ public class Window : Hdy.ApplicationWindow {
 	}
 
 	construct {
-		create_page ( dir_iterator.get_names() );
+		create_page ();
+		this.title = dir_iterator.path;
 	}
 
 	[GtkCallback]
 	private void page_changed (Hdy.Carousel carousel, uint index) {
-		current_page = index;
+		//  current_page = index;
 	}
 
 	[GtkCallback]
@@ -38,8 +40,8 @@ public class Window : Hdy.ApplicationWindow {
 		}
 	}
 
-	void create_page(string[] elem_names){
-		var page = new Page (elem_names, dir_iterator.path);
+	async void create_page(){
+		var page = new Page (dir_iterator.path, carousel.n_pages + 1);// + 1 тк кк на текущий момент она еще не создана
 
 		page.toggled.connect(page_toggled);
 
@@ -48,21 +50,26 @@ public class Window : Hdy.ApplicationWindow {
 		carousel.scroll_to(page);
 	}
 
-	void remove_page(){
-		carousel.remove (carousel.get_children().last().data);
+	async void remove_page(){
+		var removing_page = (!)(carousel.get_children().last().data as Page);
+		removing_page.toggled.disconnect(page_toggled);
+		carousel.remove (removing_page);
 		dir_iterator.go_back();
 	}
 
-	
-	void page_toggled(string label, bool is_active){
+	void page_toggled(string label, bool is_active, uint num_in_carousel){
 		if(is_active){
-			uint diff_max_and_now = carousel.n_pages - (current_page + 1);
+			uint diff_max_and_now = carousel.n_pages - (num_in_carousel);
+			prin("num in carousele = ", num_in_carousel, " all = ", carousel.n_pages, " diff = ", diff_max_and_now);
+
 			if (diff_max_and_now != 0)
 				for (var i = 0; i < diff_max_and_now; i++)
-					remove_page();
-			
+					remove_page.begin();
+				
+				
 			dir_iterator.goto(label);
-			create_page(dir_iterator.get_names());
+			this.title = dir_iterator.path;
+			create_page.begin();
 		} 
 	}
 }

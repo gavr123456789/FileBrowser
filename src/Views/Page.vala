@@ -8,49 +8,89 @@ namespace Katana {
 	{
 		[GtkChild] ListBox page_content;
 		RowWidget? last_toggled_widget;
+
+		string page_path;
+		uint number_in_carousel{private set; get;}
+
 		ArrayQueue<string> file_names_list = new ArrayQueue<string>();
 		FolderMonitoring folder_monitor = new FolderMonitoring();
-		string path;
+		DirectoryRepository dir_repo;
 
-		public signal void toggled(string str, bool is_active);
+		public signal void toggled(string str, bool is_active,  uint path_from);
 
-
-		public Page(owned string[] names, string path)
+		public Page(string path, uint number_in_carousel)
 		{
+			dir_repo = new DirectoryRepository(path);
+			this.number_in_carousel = number_in_carousel;
+			//Monitoring
+			this.page_path = path;
 			folder_monitor.monitor_dir(path);
-			folder_monitor.something_changed.connect((e,file) => {
-
-			});
-
+			folder_monitor.something_changed.connect(something_changed);
+			//
 			page_content.set_header_func(set_header_func);// add separators
 
-			foreach (var file_name in names)
-				file_names_list.add((owned)file_name);
-			
+			fill_file_names();
+			fill_page();
 			// Lazy loading
 			this.vadjustment.value_changed.connect (() => {
-				double max_value = (this.vadjustment.upper - this.vadjustment.page_size) * 0.8;
+				double max_value = (this.vadjustment.upper - this.vadjustment.page_size) * 0.85;
 				if (this.vadjustment.value >= max_value) {
-					fill_page.begin();
-				}
-			});
-			this.vadjustment.changed.connect (() => {
-				while (need_more()) {
-					fill_page.begin();
+					fill_page();
 				}
 			});
 
+			//  this.vadjustment.changed.connect (() => {
+			//  	while (need_more()) {
+			//  		fill_page();
+			//  	}
+			//  });
 		}
+
+		~Page(){
+
+		}
+
+		void fill_file_names(){
+			foreach (var file_name in dir_repo.get_names())
+				file_names_list.add(file_name);
+		}
+
+		void update(){
+			prin("updated");
+			dir_repo.update();
+			file_names_list.clear();
+			fill_file_names();
+			remove_all_elements();
+			fill_page();
+			show_all();
+		}
+		
 
 		public void add_new_element(owned string name)
 		{
 			var row = new RowWidget() { label = name };
-			row.toggled.connect(untoggle_last);
+			row.toggled.connect(row_widget_toggled);
 			page_content.add(row);
 		}
 
-		void untoggle_last(RowWidget src, string label, bool active)
+		void remove_all_elements(){
+			int i = 0;
+			prin("remove_all_elements");
+			page_content.foreach((widget) => {
+				prin(++i, " removed");
+				page_content.remove(widget);
+			});
+		}
+
+		void something_changed(FileMonitorEvent e, File file){
+			message(@"$e");
+			this.update();
+		}
+
+
+		void row_widget_toggled(RowWidget src, string label, bool active)
 		{
+			//untoggle_last
 			if(last_toggled_widget != src)
 			{
 				if (last_toggled_widget == null)
@@ -60,7 +100,8 @@ namespace Katana {
 					last_toggled_widget = src;
 				}
 			} 
-			toggled(label, active);
+			//
+			toggled(label, active, number_in_carousel);
 		}
 
 		void set_header_func (Gtk.ListBoxRow row, Gtk.ListBoxRow? row_before) 
@@ -68,7 +109,7 @@ namespace Katana {
 			row.set_header (new Gtk.Separator (Gtk.Orientation.HORIZONTAL));
 		}
 
-		public async void fill_page()
+		public void fill_page()
 		{
 			//  var timer = new Timer();
 			int max = file_names_list.size >= LAZY_LOAD_ELEMENTS? LAZY_LOAD_ELEMENTS: file_names_list.size;

@@ -4,4 +4,4 @@ executable(
     console_src,
     link_with: model_lib,
     include_directories: model_inc,
-    dependencies: valadeps)
+    dependencies: [valadeps, giodep])

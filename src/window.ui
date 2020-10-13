@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.36.0 -->
+<!-- Generated with glade 3.38.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <requires lib="libhandy" version="1.0"/>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">document-new-symbolic</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">document-new-symbolic</property>
   </object>
   <object class="GtkImage" id="image4">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">dialog-ok</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">dialog-ok</property>
   </object>
   <object class="GtkPopover" id="popover1">
-    <property name="can_focus">False</property>
+    <property name="can-focus">False</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <child>
           <object class="GtkEntry" id="folder_name_entry">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -33,15 +33,15 @@
         <child>
           <object class="GtkButton">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
             <property name="image">image4</property>
             <signal name="clicked" handler="create_folder_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="pack_type">end</property>
+            <property name="pack-type">end</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -49,22 +49,22 @@
     </child>
   </object>
   <object class="GtkPopoverMenu" id="options_popovermenu">
-    <property name="can_focus">False</property>
+    <property name="can-focus">False</property>
     <child>
       <object class="GtkBox" id="menu_box">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_top">3</property>
-        <property name="margin_bottom">3</property>
-        <property name="border_width">6</property>
+        <property name="can-focus">False</property>
+        <property name="margin-top">3</property>
+        <property name="margin-bottom">3</property>
+        <property name="border-width">6</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkModelButton" id="refresh_button">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="focus_on_click">False</property>
-            <property name="receives_default">False</property>
+            <property name="can-focus">True</property>
+            <property name="focus-on-click">False</property>
+            <property name="receives-default">False</property>
             <property name="text" translatable="yes">Refresh</property>
           </object>
           <packing>
@@ -76,9 +76,9 @@
         <child>
           <object class="GtkModelButton" id="history_button">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="focus_on_click">False</property>
-            <property name="receives_default">False</property>
+            <property name="can-focus">True</property>
+            <property name="focus-on-click">False</property>
+            <property name="receives-default">False</property>
             <property name="text" translatable="yes">View</property>
           </object>
           <packing>
@@ -90,9 +90,9 @@
         <child>
           <object class="GtkModelButton" id="preferences_button">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="focus_on_click">False</property>
-            <property name="receives_default">False</property>
+            <property name="can-focus">True</property>
+            <property name="focus-on-click">False</property>
+            <property name="receives-default">False</property>
             <property name="text" translatable="yes">Preferences</property>
           </object>
           <packing>
@@ -104,9 +104,9 @@
         <child>
           <object class="GtkModelButton" id="about_button">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="focus_on_click">False</property>
-            <property name="receives_default">False</property>
+            <property name="can-focus">True</property>
+            <property name="focus-on-click">False</property>
+            <property name="receives-default">False</property>
             <property name="text" translatable="yes">About</property>
           </object>
           <packing>
@@ -123,37 +123,36 @@
     </child>
   </object>
   <template class="KatanaWindow" parent="HdyApplicationWindow">
-    <property name="can_focus">False</property>
-    <property name="default_width">600</property>
-    <property name="default_height">300</property>
+    <property name="can-focus">False</property>
+    <property name="default-width">600</property>
+    <property name="default-height">300</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="HdyHeaderBar" id="header_bar">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="title">Hello, World!</property>
-            <property name="show_close_button">True</property>
+            <property name="can-focus">False</property>
+            <property name="show-close-button">True</property>
             <child>
               <object class="GtkBox">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkMenuButton">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="focus_on_click">False</property>
-                    <property name="receives_default">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="focus-on-click">False</property>
+                    <property name="receives-default">True</property>
                     <property name="popover">popover1</property>
                     <child>
                       <object class="GtkImage" id="image3">
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="icon_name">folder-new-symbolic</property>
+                        <property name="can-focus">False</property>
+                        <property name="icon-name">folder-new-symbolic</property>
                       </object>
                     </child>
                   </object>
@@ -166,10 +165,10 @@
                 <child>
                   <object class="GtkButton">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
                     <property name="image">image2</property>
-                    <property name="always_show_image">True</property>
+                    <property name="always-show-image">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -185,15 +184,15 @@
             <child>
               <object class="GtkToggleButton" id="search_button">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="focus_on_click">False</property>
-                <property name="receives_default">False</property>
+                <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
+                <property name="receives-default">False</property>
                 <signal name="toggled" handler="on_search_button_toggled" swapped="no"/>
                 <child>
                   <object class="GtkImage" id="search_image">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="icon_name">edit-find-symbolic</property>
+                    <property name="can-focus">False</property>
+                    <property name="icon-name">edit-find-symbolic</property>
                   </object>
                 </child>
               </object>
@@ -204,15 +203,15 @@
             <child>
               <object class="GtkMenuButton" id="menu_button">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="focus_on_click">False</property>
-                <property name="receives_default">False</property>
+                <property name="can-focus">True</property>
+                <property name="focus-on-click">False</property>
+                <property name="receives-default">False</property>
                 <property name="popover">options_popovermenu</property>
                 <child>
                   <object class="GtkImage" id="menu_icon">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="icon_name">open-menu-symbolic</property>
+                    <property name="can-focus">False</property>
+                    <property name="icon-name">open-menu-symbolic</property>
                     <property name="icon_size">1</property>
                   </object>
                 </child>
@@ -221,7 +220,7 @@
                 </style>
               </object>
               <packing>
-                <property name="pack_type">end</property>
+                <property name="pack-type">end</property>
                 <property name="position">2</property>
               </packing>
             </child>
@@ -235,22 +234,22 @@
         <child>
           <object class="GtkSearchBar" id="searchbar">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <child>
               <object class="GtkComboBoxText" id="search_comboboxtext">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="focus_on_click">False</property>
-                <property name="has_entry">True</property>
+                <property name="can-focus">False</property>
+                <property name="focus-on-click">False</property>
+                <property name="has-entry">True</property>
                 <child internal-child="entry">
                   <object class="GtkEntry">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="width_chars">50</property>
-                    <property name="caps_lock_warning">False</property>
-                    <property name="primary_icon_name">edit-find-symbolic</property>
-                    <property name="secondary_icon_name">edit-clear-symbolic</property>
-                    <property name="placeholder_text" translatable="yes">Search</property>
+                    <property name="can-focus">True</property>
+                    <property name="width-chars">50</property>
+                    <property name="caps-lock-warning">False</property>
+                    <property name="primary-icon-name">edit-find-symbolic</property>
+                    <property name="secondary-icon-name">edit-clear-symbolic</property>
+                    <property name="placeholder-text" translatable="yes">Search</property>
                   </object>
                 </child>
               </object>
@@ -265,7 +264,7 @@
         <child>
           <object class="HdyCarouselIndicatorLines">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -276,7 +275,7 @@
         <child>
           <object class="HdyCarousel" id="carousel">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <signal name="page-changed" handler="page_changed" swapped="no"/>
             <child>
               <placeholder/>

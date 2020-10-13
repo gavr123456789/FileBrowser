@@ -33,7 +33,7 @@ public class FolderHelper
         prin(Path.build_path(Path.DIR_SEPARATOR_S, path, folder_name));
         var builded_path = Path.build_path(Path.DIR_SEPARATOR_S, path, folder_name);
         var result = DirUtils.create_with_parents(builded_path, 0755);
-        prin(result == 0? "folder created":"failed");
+        prin(result == 0? "folder created":"failed to create folder");
     }
 }
 

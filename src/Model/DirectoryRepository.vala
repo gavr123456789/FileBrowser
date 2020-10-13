@@ -1,56 +1,26 @@
 using Gee;
 
-public class DirectoryNavigator
+//Provides a list of folders and files in Path
+public class DirectoryRepository
 {
-
-    public DirectoryNavigator() 
+    public DirectoryRepository(string path) 
     {
+        this.path = path;
         update();
     }
 
-    public PathHelper path_helper = new PathHelper();
     public FolderHelper folder_helper = new FolderHelper();
     public FileHelper file_helper = new FileHelper();
     
-    public string path { owned get { return path_helper.get_full(); }}
+    public string path { owned get; private set; }
 
     HashSet<string> dirs_search = new HashSet<string>(); 
     ArrayList<string> dirs = new ArrayList<string>();
     ArrayList<string> files = new ArrayList<string>();
 
-
-    public bool goto(string dir){
-        if(dir in dirs_search)
-        {
-            path_helper.append(dir);
-            message(@"goto $dir");
-            prin(Log.METHOD," ", dir);
-            update();
-            return true;
-        } else {
-            prin(path_helper);
-            //  var splitted = dir.split("/");
-            prin("xdg-open \'" + dir + "\'");
-            Process.spawn_command_line_async("xdg-open \'" + dir + "\'");
-            //  error(@"no such directory: $dir");
-            return true;
-
-        }
-        return false;
-    }
-
-    
-
-    public void go_back()
-    {
-        path_helper.remove();
-        update();
-    }
-
     //Updates dirs and files with dirs and files in current dir
     public void update() 
     {
-        //  var timer = new Timer();
         try 
         {
             Dir dir = Dir.open (path, 0);
@@ -62,6 +32,7 @@ public class DirectoryNavigator
             while ((name = dir.read_name ()) != null) 
             {
                 if (((!)name).has_prefix(".")) continue;
+
                 string path = Path.build_filename (path, name);
                 if (FileUtils.test (path, FileTest.IS_REGULAR)) 
                     files.add(Filename.display_basename(path));
@@ -80,20 +51,7 @@ public class DirectoryNavigator
         } catch (FileError err) {
             stderr.printf (err.message);
         }
-        //  prin(Log.METHOD, " ",timer.elapsed());
-    }
 
-    public void print()
-    {
-        prin("\033[1;34m");
-        int i;
-        for (i = 0; i < dirs.size; i++){
-            prin(i, ". ", dirs[i]);
-        }
-        prin("\033[0m");
-        for (int j = 0; j < files.size; j++){
-            prin(i + j, ". ", files[j]);
-        }
     }
 
     public string[] get_names()
@@ -117,5 +75,3 @@ public class DirectoryNavigator
         return s;
     }
 }
-
-[Print] public void prin(string s){stdout.printf(s + "\n");}
