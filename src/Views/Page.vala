@@ -14,7 +14,9 @@ namespace Katana {
 
 		ArrayQueue<string> file_names_list = new ArrayQueue<string>();
 		FolderMonitoring folder_monitor = new FolderMonitoring();
+		FileHelper file_helper = new FileHelper();
 		DirectoryRepository dir_repo;
+
 
 		public signal void toggled(string str, bool is_active,  uint path_from);
 
@@ -26,7 +28,7 @@ namespace Katana {
 			this.page_path = path;
 			folder_monitor.monitor_dir(path);
 			folder_monitor.something_changed.connect(something_changed);
-			//
+
 			page_content.set_header_func(set_header_func);// add separators
 
 			fill_file_names();
@@ -66,12 +68,16 @@ namespace Katana {
 		}
 		
 
-		public void add_new_element(owned string name)
+		public void add_new_element(owned File file)
 		{
-			var row = new RowWidget() { label = name };
+			string filename =  (!)file.get_basename();
+			message(@"$filename");
+			var row = new RowWidget() { label = filename };
 			row.toggled.connect(row_widget_toggled);
 			page_content.add(row);
 		}
+
+		
 
 		void remove_all_elements(){
 			int i = 0;
@@ -115,7 +121,7 @@ namespace Katana {
 			int max = file_names_list.size >= LAZY_LOAD_ELEMENTS? LAZY_LOAD_ELEMENTS: file_names_list.size;
 			
 			for (var i = 0; i < max; ++i)
-				add_new_element(file_names_list.poll());
+				add_new_element(file_helper.open_file(page_path + "/" + file_names_list.poll()));
 			
 			//  prin(Log.METHOD, " ",timer.elapsed());
 			//  prin("Items left: ", file_names_list.size);

@@ -1,5 +1,8 @@
 using Gtk;
 class RowWidget : ListBoxRow {
+
+    Item item;
+
     private ToggleButton direction_btn = new ToggleButton(){
         always_show_image = true,
         label = "",
@@ -19,10 +22,7 @@ class RowWidget : ListBoxRow {
         set { select_btn.label = value; } 
     }
 
-    Item item;
-
-
-    construct {
+    public RowWidget(){
         this.add(main_box);
         main_box.add(select_btn);
         main_box.add(direction_btn);

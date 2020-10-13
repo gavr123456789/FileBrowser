@@ -45,4 +45,8 @@ public class FileHelper {
         message(@"removing $(Path.build_path(path,file_name))");
         FileUtils.remove(Path.build_path(path, file_name));
     }
+
+    public File open_file(string path){
+        return File.new_for_path (path);
+    }
 }
