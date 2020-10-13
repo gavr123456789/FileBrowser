@@ -124,17 +124,17 @@ namespace Katana {
 		}
 
 		//For lazy load
-		bool need_more() 
-		{
-			if(file_names_list.size != 0)
-			{
-				int natural_height;
-				page_content.get_preferred_height (null, out natural_height);
+		//  bool need_more() 
+		//  {
+		//  	if(file_names_list.size != 0)
+		//  	{
+		//  		int natural_height;
+		//  		page_content.get_preferred_height (null, out natural_height);
 
-				if (this.vadjustment.page_size > natural_height) 
-					return true;
-			}
-			return false;
-		}
+		//  		if (this.vadjustment.page_size > natural_height) 
+		//  			return true;
+		//  	}
+		//  	return false;
+		//  }
 	}
 }

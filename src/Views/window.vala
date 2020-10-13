@@ -6,9 +6,8 @@ public class Window : Hdy.ApplicationWindow {
 	[GtkChild] Gtk.ToggleButton search_button;
 	[GtkChild] Gtk.SearchBar searchbar;
 	[GtkChild] Gtk.Entry folder_name_entry;
-	//  uint current_page; 
+ 
 	DirectoryNavigator dir_iterator = new DirectoryNavigator();
-	PathHelper path_helper = new PathHelper();
 	
 
 	public Window (Gtk.Application app) {
@@ -16,7 +15,7 @@ public class Window : Hdy.ApplicationWindow {
 	}
 
 	construct {
-		create_page ();
+		create_page.begin();
 		this.title = dir_iterator.path;
 	}
 

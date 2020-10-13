@@ -19,6 +19,8 @@ class RowWidget : ListBoxRow {
         set { select_btn.label = value; } 
     }
 
+    Item item;
+
 
     construct {
         this.add(main_box);

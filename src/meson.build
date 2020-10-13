@@ -1,38 +1,9 @@
-katana_sources = [
-  'main.vala',
-  'Views/window.vala',
-  'Views/Page.vala',
-  'Views/RowWidget.vala'
-]
-
-valadeps = [dependency('glib-2.0'), dependency('gobject-2.0')]
 giodep = dependency('gio-2.0')
 geedep = dependency('gee-0.8')
-gtkdep = dependency('gtk+-3.0', version: '>= 3.22')
-hdydep = dependency('libhandy-1', version: '>= 0.90')
-model_inc = include_directories('Model')
 
+valadeps = [dependency('glib-2.0'), dependency('gobject-2.0')]
+
+katana_sources = [files('main.vala')]
 subdir('Model')
-subdir('Console_app')
+subdir('Views')
 
-
-katana_deps = [
-  giodep,
-  gtkdep,
-  geedep,
-  hdydep
-]
-
-gnome = import('gnome')
-
-katana_sources += gnome.compile_resources('katana-resources',
-  'katana.gresource.xml',
-  c_name: 'katana'
-)
-
-executable('katana', katana_sources,
-  link_with: model_lib,
-  include_directories: model_inc,
-  vala_args: '--target-glib=2.50',  dependencies: katana_deps,
-  install: true,
-)
