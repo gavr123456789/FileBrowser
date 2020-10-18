@@ -14,7 +14,7 @@ public class DirectoryRepository
     
     public string path { owned get; private set; }
 
-    HashSet<string> dirs_search = new HashSet<string>(); 
+    public HashSet<string> dirs_search = new HashSet<string>(); 
     ArrayList<string> dirs = new ArrayList<string>();
     ArrayList<string> files = new ArrayList<string>();
 

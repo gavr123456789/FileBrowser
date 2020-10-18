@@ -71,7 +71,7 @@ namespace Katana {
 		public void add_new_element(owned File file)
 		{
 			string filename =  (!)file.get_basename();
-			message(@"$filename");
+			//  message(@"$filename");
 			var row = new RowWidget() { label = filename };
 			row.toggled.connect(row_widget_toggled);
 			page_content.add(row);
