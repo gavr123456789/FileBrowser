@@ -1,6 +1,19 @@
 # FileBrowser
 FileBrowser with Vala &amp; GTK
 
+## Version 0.2.0
+![](demo-0.2.0.gif)  
+- [x] Can go threo dirs
+- [x] Go back  
+- [x] Buttons arrows  
+- [x] Lazy loading  
+- [x] Open files  
+- [ ] Copy  
+- [ ] File sorting  
+- [ ] File selecting  
+- [ ] Rename  
+- [ ] Search
+
 ## Version 0.1.4
 ![](demo-0.1.4.gif)  
 - [x] Can go threo dirs

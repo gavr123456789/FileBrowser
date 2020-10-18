@@ -36,7 +36,7 @@ public class MainController{
 		dir_iterator.folder_helper.create_folder(dir_iterator.path, folder_name);
     }
     
-    void page_toggled(string label, bool is_active, uint num_in_carousel){
+    void page_toggled(File file, bool is_active, uint num_in_carousel){
 		if(is_active){
 			uint diff_max_and_now = carousel.n_pages - (num_in_carousel);
 			prin("num in carousele = ", num_in_carousel, " all = ", carousel.n_pages, " diff = ", diff_max_and_now);
@@ -45,8 +45,8 @@ public class MainController{
 			    delete_last_n_row(diff_max_and_now);
 				
 				
-			dir_iterator.goto(label);
-			create_page.begin();
+			if (dir_iterator.goto(file) != false)
+				create_page.begin();
 		} 
 	}
 

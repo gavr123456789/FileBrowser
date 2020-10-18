@@ -1,6 +1,7 @@
 using Gtk;
 using Gee;
 namespace Katana {
+	
 	const int LAZY_LOAD_ELEMENTS = 40;
 
 	[GtkTemplate (ui = "/org/gnome/Katana/Page.ui")]
@@ -18,7 +19,7 @@ namespace Katana {
 		DirectoryRepository dir_repo;
 
 
-		public signal void toggled(string str, bool is_active,  uint path_from);
+		public signal void toggled(File str, bool is_active,  uint path_from);
 
 		public Page(string path, uint number_in_carousel)
 		{
@@ -72,7 +73,7 @@ namespace Katana {
 		{
 			string filename =  (!)file.get_basename();
 			//  message(@"$filename");
-			var row = new RowWidget() { label = filename };
+			var row = new RowWidget(file) { label = filename };
 			row.toggled.connect(row_widget_toggled);
 			page_content.add(row);
 		}
@@ -94,7 +95,7 @@ namespace Katana {
 		}
 
 
-		void row_widget_toggled(RowWidget src, string label, bool active)
+		void row_widget_toggled(RowWidget src, File file, bool active)
 		{
 			//untoggle_last
 			if(last_toggled_widget != src)
@@ -107,7 +108,7 @@ namespace Katana {
 				}
 			} 
 			//
-			toggled(label, active, number_in_carousel);
+			toggled(file, active, number_in_carousel);
 		}
 
 		void set_header_func (Gtk.ListBoxRow row, Gtk.ListBoxRow? row_before) 
