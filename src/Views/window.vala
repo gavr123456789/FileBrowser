@@ -7,6 +7,8 @@ public class Window : Hdy.ApplicationWindow {
 	[GtkChild] Gtk.ToggleButton create_folder;
 	[GtkChild] Gtk.SearchBar searchbar;
 	[GtkChild] Gtk.Entry folder_name_entry;
+	[GtkChild] Gtk.Entry file_format_entry;
+	[GtkChild] Gtk.Entry file_name_entry;
  
 	MainController main_controller;
 
@@ -28,6 +30,14 @@ public class Window : Hdy.ApplicationWindow {
 	private void create_folder_clicked (Gtk.Button btn) {
 		main_controller.create_folder(folder_name_entry.text);
 		folder_name_entry.text = "";
+		create_folder.active = false;
+	}
+
+	[GtkCallback]
+	private void create_file_clicked (Gtk.Button btn) {
+		main_controller.create_file(file_name_entry.text + file_format_entry.text);
+		file_name_entry.text   = "";
+		file_format_entry.text = "";
 		create_folder.active = false;
 	}
 

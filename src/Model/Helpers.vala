@@ -37,8 +37,6 @@ public class FolderHelper
     }
 }
 
-
-
 [Compact]
 public class FileHelper {
     public void delete_file(string path, string file_name){
@@ -48,5 +46,12 @@ public class FileHelper {
 
     public File open_file(string path){
         return File.new_for_path (path);
+    }
+
+    public File create_file(string path, string file_name){
+        message(@"creating file: $(Path.build_path(Path.DIR_SEPARATOR_S, path, file_name))");
+        string builded_path = Path.build_path(Path.DIR_SEPARATOR_S, path, file_name);
+        
+        return File.new_for_path (builded_path);
     }
 }

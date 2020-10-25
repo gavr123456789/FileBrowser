@@ -17,7 +17,10 @@ public class DirectoryNavigator
 
     public signal void open_file(File file);
 
-
+    /**
+    * @file open dir or file
+    * @return true if it was a folder, false if it was a file
+    */
     public bool goto(File file){
 
         var filename = (!)file.get_basename();
@@ -29,13 +32,7 @@ public class DirectoryNavigator
             update();
             return true;
         } else {
-            //  prin(path_helper);
-            message("xdg-open " +  "\'" + (!)file.get_uri() + "\'");
-            //  try {
-                open_file(file);
-                //  Process.spawn_command_line_sync("xdg-open " +  "\'" + (!)file.get_uri() + "\'");
-            //  } catch (SpawnError e) {error(e.message);}
-
+            open_file(file);
             return false;
         }
     }
@@ -46,7 +43,9 @@ public class DirectoryNavigator
         update();
     }
 
-    //Updates dirs and files with dirs and files in current dir
+    /**
+    * Updates dirs and files with dirs and files in current dir
+    */
     public void update() 
     {
         try 

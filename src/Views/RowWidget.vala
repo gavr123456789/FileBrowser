@@ -1,7 +1,7 @@
 using Gtk;
 class RowWidget : ListBoxRow {
-    public RowWidget(owned File file){
-        item.file = file;
+    public RowWidget(owned GLib.File file){
+        content.file = file;
 
         this.add(main_box);
         main_box.add(select_btn);
@@ -11,10 +11,10 @@ class RowWidget : ListBoxRow {
         direction_btn.toggled.connect(toggled_handler);
     }
 
-    Item item;
+    Content content;
 
-    private ToggleButton select_btn = new ToggleButton();
-    private Box main_box = new Box(Orientation.HORIZONTAL, 0);
+    ToggleButton select_btn = new ToggleButton();
+    Box main_box = new Box(Orientation.HORIZONTAL, 0);
     
     public signal void toggled(File file, bool is_active);
   
@@ -27,6 +27,11 @@ class RowWidget : ListBoxRow {
         set { select_btn.label = value;} 
     }
 
+    public FileType file_type {
+        get { return content.file.query_file_type(FileQueryInfoFlags.NONE); } 
+    }
+
+
     private ToggleButton direction_btn = new ToggleButton(){
         always_show_image = true,
         label = "",
@@ -34,7 +39,21 @@ class RowWidget : ListBoxRow {
     };
 
     inline void toggled_handler (ToggleButton src){
-        toggled(item.file, direction_btn.active);
+        if(src.active)
+        {
+            prin("check file type:", file_type);
+            if(file_type == FileType.REGULAR) {
+                TimeoutSource time = new TimeoutSource.seconds(1);
+
+                time.set_callback (() => {
+                    src.active = false;
+                    prin("pint");
+                    return false;
+                });
+                time.attach();
+            }
+        }
+        toggled(content.file, direction_btn.active);
     }
     
 }

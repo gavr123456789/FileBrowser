@@ -1,4 +1,3 @@
-public struct Item {
-    public File file;
-    
+public struct Content {
+    public GLib.File file;
 }

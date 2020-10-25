@@ -33,7 +33,6 @@
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
             <property name="image">image2</property>
-            <signal name="clicked" handler="create_file_clicked" swapped="no"/>
             <accelerator key="Return" signal="clicked"/>
           </object>
           <packing>
