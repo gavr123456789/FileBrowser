@@ -16,11 +16,13 @@ Model_sources = [files(
     'Model/Helpers.vala',
     'Model/Item.vala')]
 
+#View and Controllers building together because of circular dependencies
 Views_and_Controllers_sources = [files(
     'Views/Page.vala',
     'Views/window.vala',
     'Views/RowWidget.vala',
-    'Controllers/MainController.vala')]
+    'Controllers/MainController.vala',
+    'Controllers/SelectedFiles.vala')]
 
 katana_sources += Views_and_Controllers_sources
 

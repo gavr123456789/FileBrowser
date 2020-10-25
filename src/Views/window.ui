@@ -20,6 +20,8 @@
             <property name="name">entry_file_name</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
+            <property name="placeholder-text" translatable="yes">file name</property>
+            <signal name="activate" handler="create_file_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -52,6 +54,9 @@
             <property name="valign">baseline</property>
             <property name="width-chars">4</property>
             <property name="truncate-multiline">True</property>
+            <property name="primary-icon-tooltip-text" translatable="yes">file format</property>
+            <property name="secondary-icon-tooltip-text" translatable="yes">File format</property>
+            <signal name="activate" handler="create_file_clicked" swapped="no"/>
             <style>
               <class name="short-entry"/>
             </style>
@@ -84,6 +89,7 @@
             <property name="name">entry_folder_name</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
+            <property name="placeholder-text" translatable="yes">folder name</property>
             <signal name="activate" handler="create_folder_clicked" swapped="no"/>
           </object>
           <packing>
@@ -126,12 +132,13 @@
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
-          <object class="GtkModelButton" id="refresh_button">
+          <object class="GtkModelButton" id="test_button">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="focus-on-click">False</property>
             <property name="receives-default">False</property>
-            <property name="text" translatable="yes">Refresh</property>
+            <property name="text" translatable="yes">Test</property>
+            <signal name="clicked" handler="test_button_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -335,6 +342,78 @@
           </packing>
         </child>
         <child>
+          <object class="GtkInfoBar" id="selectedbar">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="hexpand">True</property>
+            <property name="homogeneous">True</property>
+            <property name="show-close-button">True</property>
+            <property name="revealed">False</property>
+            <signal name="response" handler="infobar_close" swapped="no"/>
+            <child internal-child="action_area">
+              <object class="GtkButtonBox">
+                <property name="can-focus">False</property>
+                <property name="spacing">6</property>
+                <property name="layout-style">end</property>
+                <child>
+                  <object class="GtkLabel" id="infobar_label">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">label</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child internal-child="content_area">
+              <object class="GtkBox">
+                <property name="can-focus">False</property>
+                <property name="spacing">16</property>
+                <child>
+                  <object class="GtkImage" id="infobar_icon">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="stock">gtk-missing-image</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
           <object class="HdyCarouselIndicatorLines">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
@@ -342,7 +421,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">3</property>
           </packing>
         </child>
         <child>
@@ -357,7 +436,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">3</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </object>

@@ -20,6 +20,7 @@ namespace Katana {
 
 
 		public signal void toggled(File str, bool is_active,  uint path_from);
+		public signal void selected(RowWidget str, bool is_active,  uint path_from);
 
 		public Page(string path, uint number_in_carousel)
 		{
@@ -72,15 +73,14 @@ namespace Katana {
 		public void add_new_element(owned File file)
 		{
 			string filename =  (!)file.get_basename();
-			//  message(@"$filename");
 			var row = new RowWidget(file) { label = filename };
-			row.toggled.connect(row_widget_toggled);
+			row.direction_btn_toggled.connect(row_widget_toggled);
+			row.select_btn_toggled.connect(row_widget_selected);
 			page_content.add(row);
 		}
 
-		
-
-		void remove_all_elements(){
+		void remove_all_elements()
+		{
 			int i = 0;
 			prin("remove_all_elements");
 			page_content.foreach((widget) => {
@@ -89,7 +89,8 @@ namespace Katana {
 			});
 		}
 
-		void something_changed(FileMonitorEvent e, File file){
+		void something_changed(FileMonitorEvent e, File file)
+		{
 			message(@"$e");
 			this.update();
 		}
@@ -109,6 +110,10 @@ namespace Katana {
 			} 
 			//
 			toggled(file, active, number_in_carousel);
+		}
+		void row_widget_selected(RowWidget src, bool active)
+		{
+			selected(src, active, number_in_carousel);
 		}
 
 		void set_header_func (Gtk.ListBoxRow row, Gtk.ListBoxRow? row_before) 

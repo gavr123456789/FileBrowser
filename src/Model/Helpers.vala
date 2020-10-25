@@ -35,7 +35,7 @@ public class FolderHelper
         var result = DirUtils.create_with_parents(builded_path, 0755);
         prin(result == 0? "folder created":"failed to create folder");
     }
-}
+} 
 
 [Compact]
 public class FileHelper {
@@ -51,7 +51,11 @@ public class FileHelper {
     public File create_file(string path, string file_name){
         message(@"creating file: $(Path.build_path(Path.DIR_SEPARATOR_S, path, file_name))");
         string builded_path = Path.build_path(Path.DIR_SEPARATOR_S, path, file_name);
-        
-        return File.new_for_path (builded_path);
+        var file = File.new_for_path (builded_path);
+        try {
+            file.create(FileCreateFlags.NONE);
+        } catch (Error e) {message(e.message);}
+        return file;
+
     }
 }

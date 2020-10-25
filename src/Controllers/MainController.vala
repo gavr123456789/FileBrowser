@@ -3,22 +3,27 @@ using Gee;
 //управляется из MainWindow, посылает запросы в DirNavigator
 public class MainController{
 
-    public MainController(Hdy.Carousel carousel)
+    public MainController(Hdy.Carousel carousel, Gtk.InfoBar infobar)
     {
 		this.carousel = carousel;
+		this.infobar = infobar;
 		//opening files in associated programm
 		dir_nav.open_file.connect(open_file);
+
+		
     }
 
-    weak Hdy.Carousel carousel;
+	weak Hdy.Carousel carousel;
+	weak Gtk.InfoBar infobar;
 	DirectoryNavigator dir_nav = new DirectoryNavigator();
-	
+	SelectedFiles selected_files = new SelectedFiles();
 
 	public async void create_page()
 	{
 		var page = new Page (dir_nav.path, carousel.n_pages + 1);// + 1 тк кк на текущий момент она еще не создана
 
 		page.toggled.connect(page_toggled);
+		page.selected.connect(page_selected);
 
 		carousel.add(page);
 		carousel.scroll_to(page);
@@ -68,6 +73,13 @@ public class MainController{
 			else {
 				
 			}
+		} 
+	}
+
+	void page_selected(RowWidget row_widget, bool is_active, uint num_in_carousel)
+	{
+		if(is_active){
+			selected_files.selected_rows.add(row_widget);
 		} 
 	}
 
