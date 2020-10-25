@@ -4,6 +4,7 @@ namespace Katana{
 public class Window : Hdy.ApplicationWindow {
 	[GtkChild] Hdy.Carousel carousel;
 	[GtkChild] Gtk.ToggleButton search_button;
+	[GtkChild] Gtk.ToggleButton create_folder;
 	[GtkChild] Gtk.SearchBar searchbar;
 	[GtkChild] Gtk.Entry folder_name_entry;
  
@@ -26,6 +27,8 @@ public class Window : Hdy.ApplicationWindow {
 	[GtkCallback]
 	private void create_folder_clicked (Gtk.Button btn) {
 		main_controller.create_folder(folder_name_entry.text);
+		folder_name_entry.text = "";
+		create_folder.active = false;
 	}
 
 	[GtkCallback]

@@ -5,17 +5,28 @@ public class MainController{
 
     public MainController(Hdy.Carousel carousel)
     {
-        this.carousel = carousel;
+		this.carousel = carousel;
+		dir_nav.open_file.connect((file) => {
+			var window = carousel.get_toplevel();
+			if(!(window is Window)) error("toplevel of carousel is now window!");
+
+			try {
+				Gtk.show_uri_on_window(
+					(Window)window,
+					file.get_uri(),
+					Gdk.CURRENT_TIME
+				);
+			} catch (Error e) {error(e.message);}
+		});
     }
 
     weak Hdy.Carousel carousel;
-    DirectoryNavigator DirNav;
     ArrayQueue<Page> pages_collection = new ArrayQueue<Page>();
-	DirectoryNavigator dir_iterator = new DirectoryNavigator();
-
+	DirectoryNavigator dir_nav = new DirectoryNavigator();
+	
 
     public async void create_page(){
-		var page = new Page (dir_iterator.path, carousel.n_pages + 1);// + 1 тк кк на текущий момент она еще не создана
+		var page = new Page (dir_nav.path, carousel.n_pages + 1);// + 1 тк кк на текущий момент она еще не создана
 
 		page.toggled.connect(page_toggled);
 
@@ -28,12 +39,13 @@ public class MainController{
 		var removing_page = (!)(carousel.get_children().last().data as Page);
 		removing_page.toggled.disconnect(page_toggled);
 		carousel.remove (removing_page);
-		dir_iterator.go_back();
+		dir_nav.go_back();
 	}
     
     public void create_folder (string folder_name) {
 		
-		dir_iterator.folder_helper.create_folder(dir_iterator.path, folder_name);
+		dir_nav.folder_helper.create_folder(dir_nav.path, folder_name);
+		dir_nav.update();
     }
     
     void page_toggled(File file, bool is_active, uint num_in_carousel){
@@ -45,7 +57,7 @@ public class MainController{
 			    delete_last_n_row(diff_max_and_now);
 				
 				
-			if (dir_iterator.goto(file) != false)
+			if (dir_nav.goto(file) != false)
 				create_page.begin();
 		} 
 	}

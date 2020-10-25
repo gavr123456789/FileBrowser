@@ -11,12 +11,15 @@ public class DirectoryNavigator
     public PathHelper path_helper = new PathHelper();
     public FolderHelper folder_helper = new FolderHelper();
     public FileHelper file_helper = new FileHelper();
+    HashSet<string> dirs_search = new HashSet<string>(); 
     
     public string path { owned get { return path_helper.get_full(); }}
 
-    HashSet<string> dirs_search = new HashSet<string>(); 
+    public signal void open_file(File file);
+
 
     public bool goto(File file){
+
         var filename = (!)file.get_basename();
         if(filename in dirs_search)
         {
@@ -28,9 +31,10 @@ public class DirectoryNavigator
         } else {
             //  prin(path_helper);
             message("xdg-open " +  "\'" + (!)file.get_uri() + "\'");
-            try {
-                Process.spawn_command_line_sync("xdg-open " +  "\'" + (!)file.get_uri() + "\'");
-            } catch (SpawnError e) {error(e.message);}
+            //  try {
+                open_file(file);
+                //  Process.spawn_command_line_sync("xdg-open " +  "\'" + (!)file.get_uri() + "\'");
+            //  } catch (SpawnError e) {error(e.message);}
 
             return false;
         }
