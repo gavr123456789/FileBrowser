@@ -3,10 +3,11 @@ using Gee;
 //управляется из MainWindow, посылает запросы в DirNavigator
 public class MainController{
 
-    public MainController(Hdy.Carousel carousel, Gtk.InfoBar infobar)
+    public MainController(Hdy.Carousel carousel, Gtk.Revealer infobar, Gtk.Statusbar statusbar)
     {
 		this.carousel = carousel;
 		this.infobar = infobar;
+		this.statusbar = statusbar;
 		//opening files in associated programm
 		dir_nav.open_file.connect(open_file);
 
@@ -14,7 +15,8 @@ public class MainController{
     }
 
 	weak Hdy.Carousel carousel;
-	weak Gtk.InfoBar infobar;
+	weak Gtk.Revealer infobar;
+	weak Gtk.Statusbar statusbar;
 	DirectoryNavigator dir_nav = new DirectoryNavigator();
 	SelectedFiles selected_files = new SelectedFiles();
 
@@ -79,8 +81,26 @@ public class MainController{
 	void page_selected(RowWidget row_widget, bool is_active, uint num_in_carousel)
 	{
 		if(is_active){
+			prin(row_widget.label);
 			selected_files.selected_rows.add(row_widget);
-		} 
+		} else {
+			selected_files.selected_rows.remove(row_widget);
+		}
+
+		//Если выделенных больше нуля, и панель не открыта, то открыть панель, если выделенных стало ноль а панель открыта
+		//то закрыть панель
+		if(selected_files.selected_rows.size > 0 && infobar.child_revealed == false){
+			infobar.reveal_child = true;
+		} else if (selected_files.selected_rows.size == 0 && infobar.child_revealed == true){
+			infobar.reveal_child = false;
+		}
+		statusbar.pop(1);
+		statusbar.push(1, @"$(selected_files.selected_rows.size)");
+
+		prin("selected: ", selected_files.selected_rows.size);
+		foreach (var row in selected_files.selected_rows){
+			prin(row.label);
+		}
 	}
 
     inline void delete_last_rows_if_needed(uint num_in_carousel)

@@ -1,5 +1,5 @@
 using Gee;
 class SelectedFiles {
-    public ArrayQueue<RowWidget> selected_rows = new ArrayQueue<RowWidget>();
+    public HashSet<RowWidget> selected_rows = new HashSet<RowWidget>();
 
 }

@@ -3,6 +3,20 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <requires lib="libhandy" version="1.0"/>
+  <object class="GtkBox">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="spacing">7</property>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+  </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -119,6 +133,21 @@
         </style>
       </object>
     </child>
+  </object>
+  <object class="GtkImage" id="image6">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">insert-object-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image7">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">user-trash-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image9">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">edit-copy-symbolic</property>
   </object>
   <object class="GtkPopoverMenu" id="options_popovermenu">
     <property name="can-focus">False</property>
@@ -342,86 +371,98 @@
           </packing>
         </child>
         <child>
-          <object class="GtkInfoBar" id="selectedbar">
+          <object class="GtkRevealer" id="selectedbar">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="hexpand">True</property>
-            <property name="homogeneous">True</property>
-            <property name="show-close-button">True</property>
-            <property name="revealed">False</property>
-            <signal name="response" handler="infobar_close" swapped="no"/>
-            <child internal-child="action_area">
-              <object class="GtkButtonBox">
+            <child>
+              <object class="GtkStatusbar" id="statusbar">
+                <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="spacing">6</property>
-                <property name="layout-style">end</property>
+                <property name="margin-start">10</property>
+                <property name="margin-end">10</property>
+                <property name="margin-top">6</property>
+                <property name="margin-bottom">6</property>
+                <property name="spacing">8</property>
                 <child>
-                  <object class="GtkLabel" id="infobar_label">
+                  <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">label</property>
+                    <property name="homogeneous">True</property>
+                    <child>
+                      <object class="GtkButton" id="copy">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image6</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="move">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image9</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="delete">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">image7</property>
+                        <property name="image-position">top</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <style>
+                      <class name="linked"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">0</property>
+                    <property name="pack-type">end</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child internal-child="content_area">
-              <object class="GtkBox">
-                <property name="can-focus">False</property>
-                <property name="spacing">16</property>
-                <child>
-                  <object class="GtkImage" id="infobar_icon">
+                  <object class="GtkEntry" id="rename_entry">
                     <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="stock">gtk-missing-image</property>
+                    <property name="can-focus">True</property>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
+                    <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">0</property>
+                    <property name="pack-type">end</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <placeholder/>
             </child>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="HdyCarouselIndicatorLines">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">3</property>
           </packing>
         </child>
         <child>
@@ -432,6 +473,18 @@
             <child>
               <placeholder/>
             </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="HdyCarouselIndicatorLines">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="carousel">carousel</property>
           </object>
           <packing>
             <property name="expand">False</property>

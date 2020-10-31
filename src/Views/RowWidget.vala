@@ -9,6 +9,9 @@ public class RowWidget : ListBoxRow {
         
         main_box.get_style_context().add_class(STYLE_CLASS_LINKED);
         direction_btn.toggled.connect(toggled_handler);
+        select_btn.toggled.connect((src) => {
+            select_btn_toggled(this, src.active);
+        });
     }
 
     Content content;
