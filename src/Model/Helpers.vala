@@ -7,8 +7,9 @@ public class PathHelper
     }
     
     ArrayList<string> path = new ArrayList<string>();
-    public void append(string s) { path.add(Path.DIR_SEPARATOR_S + s); }
-    public void remove()         { path.remove_at(path.size - 1); }
+    public void append(string s){ path.add(Path.DIR_SEPARATOR_S + s); }
+    public void remove()        { path.remove_at(path.size - 1); }
+    public string on_index(int index) requires (index > -1) {return path[index];}
     public int size { get{ return path.size; } }
 
     public inline string get_full()

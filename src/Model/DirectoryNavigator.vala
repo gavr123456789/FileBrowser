@@ -1,5 +1,7 @@
 using Gee;
 
+
+//Contains the latest(from rigth) oped directory
 public class DirectoryNavigator
 {
 
@@ -9,6 +11,8 @@ public class DirectoryNavigator
     }
 
     public PathHelper path_helper = new PathHelper();
+
+    public int selected_path_index;
     public FolderHelper folder_helper = new FolderHelper();
     public FileHelper file_helper = new FileHelper();
     HashSet<string> dirs_search = new HashSet<string>(); 
@@ -36,6 +40,27 @@ public class DirectoryNavigator
             return false;
         }
     }
+
+
+    public void go_left_selected()
+    {
+        --selected_path_index;
+        prin("index--");
+        prin(selected_path_index);
+
+    }
+    public void go_rigth_selected()
+    {
+        ++selected_path_index;
+        prin("index++");
+        prin(selected_path_index);
+    }
+    public string selected_path{
+        owned get{
+            return path_helper.on_index(selected_path_index);
+        }
+    }
+
 
     public void go_back()
     {

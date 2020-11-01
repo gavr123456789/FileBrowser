@@ -22,30 +22,36 @@ public class Window : Hdy.ApplicationWindow {
 	//  [GtkChild] Gtk.Image infobar_icon;
  
 	MainController main_controller;
+	uint current_page = 0;
 
 	public Window (Gtk.Application app) {
 		Object (application: app);
 	}
-
 	construct {
 		main_controller = new MainController(carousel, selectedbar, statusbar);
 		main_controller.create_page.begin();
 	}
 
 	[GtkCallback]
-	private void page_changed (Hdy.Carousel carousel, uint index) {
-		//  current_page = index;
+	void page_changed (Hdy.Carousel carousel, uint index) {
+		//We need to check is it changed left or rigth
+		if(current_page < index)
+			main_controller.go_rigth();
+		else if (current_page > index)
+			main_controller.go_left();
+
+		current_page = index;
 	}
 
 	[GtkCallback]
-	private void create_folder_clicked (Gtk.Widget btn) {
+	void create_folder_clicked (Gtk.Widget btn) {
 		main_controller.create_folder(folder_name_entry.text);
 		folder_name_entry.text = "";
 		create_folder.active = false;
 	}
 
 	[GtkCallback]
-	private void create_file_clicked (Gtk.Widget btn) {
+	void create_file_clicked (Gtk.Widget btn) {
 		string format = 
 		file_format_entry.text.has_prefix(".")?
 		 file_format_entry.text:
@@ -66,6 +72,16 @@ public class Window : Hdy.ApplicationWindow {
 		}
 	}
 
+	[GtkCallback]
+	void delete_file_clicked (Gtk.Button src) {
+		main_controller.delete_selected_files();
+	}
+
+	[GtkCallback]
+	void copy_file_clicked (Gtk.Button src) {
+		message(@"$(main_controller.cur_path)");
+		//main_controller.copy_selected_files(main_controller.cur_path);
+	}
 
 	[GtkCallback]
 	void test_button_clicked (Gtk.Button src) {

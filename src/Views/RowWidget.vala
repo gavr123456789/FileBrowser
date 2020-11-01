@@ -1,6 +1,6 @@
 using Gtk;
 public class RowWidget : ListBoxRow {
-    public RowWidget(owned GLib.File file){
+    public RowWidget(GLib.File file){
         content.file = file;
 
         this.add(main_box);
@@ -8,13 +8,16 @@ public class RowWidget : ListBoxRow {
         main_box.add(direction_btn);
         
         main_box.get_style_context().add_class(STYLE_CLASS_LINKED);
-        direction_btn.toggled.connect(toggled_handler);
-        select_btn.toggled.connect((src) => {
-            select_btn_toggled(this, src.active);
-        });
+        direction_btn.toggled.connect(direction_toggled_handler);
+        select_btn.toggled.connect(selected_toggled_handler);
     }
 
-    Content content;
+    ~RowWidget(){
+        direction_btn.toggled.disconnect(direction_toggled_handler);
+        select_btn.toggled.disconnect(selected_toggled_handler);
+    }
+
+    Content content = new Content();
 
     ToggleButton select_btn    = new ToggleButton();
     ToggleButton direction_btn = new ToggleButton(){
@@ -47,7 +50,15 @@ public class RowWidget : ListBoxRow {
         get { return content.file.query_file_type(FileQueryInfoFlags.NONE); } 
     }
 
-    inline void toggled_handler (ToggleButton src){
+    public inline void delete_file(){
+        content.delete_sync();
+    }
+
+    public inline void copy_async_file(owned string path, int copy_num){
+        content.copy_async_to(path, copy_num);
+    }
+
+    inline void direction_toggled_handler (ToggleButton src){
         if(src.active)
         {
             prin("Toggled file type: ", file_type);
@@ -63,5 +74,11 @@ public class RowWidget : ListBoxRow {
         }
         direction_btn_toggled(content.file, direction_btn.active);
     }
+
+    inline void selected_toggled_handler (ToggleButton src){
+        select_btn_toggled(this, src.active);
+
+    }
+
     
 }

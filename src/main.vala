@@ -12,6 +12,7 @@ int main (string[] args) {
 		win.present ();
 	});
 
+	//For catching CRITICALS with GDB
 	Log.set_always_fatal(LogLevelFlags.LEVEL_CRITICAL);
 
 	return app.run (args);
